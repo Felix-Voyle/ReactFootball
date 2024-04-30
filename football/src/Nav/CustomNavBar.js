@@ -5,13 +5,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 import styles from './Nav.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import LoginButton from './LogInButton';
+import LogoutButton from './LogOutButton';
+
 
 function CustomNavbar() {
-  const { loginWithRedirect } = useAuth0();
-
-  const handleLoginClick = () => {
-    loginWithRedirect();
-  };
+  const { isAuthenticated } = useAuth0();
 
   return (
     <Navbar className={styles.nav} bg="dark" variant="dark" expand="lg">
@@ -23,7 +22,11 @@ function CustomNavbar() {
           <Nav.Link as={Link} to="/about">About</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link onClick={handleLoginClick}>Login</Nav.Link>
+        {isAuthenticated ? (
+            <Nav.Link><LogoutButton/></Nav.Link>
+          ) : (
+            <Nav.Link> <LoginButton/> </Nav.Link>
+          )}
         </Nav>
       </NavbarCollapse>
     </Navbar>
